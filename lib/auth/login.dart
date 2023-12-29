@@ -1,7 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:helper_fire_bace/auth/whigets/customlogoauth.dart';
 import 'package:helper_fire_bace/auth/whigets/textformfield.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../home_view/home_view.dart';
 import 'signup.dart';
 import 'whigets/custombuttonauth.dart';
@@ -68,9 +69,56 @@ class _LoginState extends State<Login> {
           CustomButtonAuth(
             title: "login",
             onPressed: () async {
-              
+              try {
+                final credential = await FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                        email: email!, password: password!);
 
-
+                if (credential.user!.emailVerified) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeView(),
+                    ),
+                  );
+                } else {
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: 'Error',
+                    desc: 'plese vervay emil',
+                    btnCancelOnPress: () {},
+                    btnOkOnPress: () {},
+                  )..show();
+                }
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'user-not-found') {
+                  print('No user found for that email.');
+                  // AwesomeDialog
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: 'Error',
+                    desc: 'No user found for that email.',
+                    btnCancelOnPress: () {},
+                    btnOkOnPress: () {},
+                  )..show();
+                } else if (e.code == 'wrong-password') {
+                  print('Wrong password provided for that user.');
+                  // AwesomeDialog
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: 'Error',
+                    desc: 'Wrong password provided for that user.',
+                    btnCancelOnPress: () {},
+                    btnOkOnPress: () {},
+                  )..show();
+                }
+              }
             },
           ),
           Container(height: 20),

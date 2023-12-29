@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:helper_fire_bace/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:helper_fire_bace/firebase_options.dart';
+import 'package:helper_fire_bace/home_view/home_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +41,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return const  MaterialApp(
      debugShowCheckedModeBanner: false,
-     home: Login(),
+     home: Login() 
+     
+   
     );
   }
 }
+// FirebaseAuth.instance.currentUser == null ? Login() : HomeView(),
