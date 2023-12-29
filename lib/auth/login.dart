@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helper_fire_bace/auth/whigets/customlogoauth.dart';
 import 'package:helper_fire_bace/auth/whigets/textformfield.dart';
 
+import '../home_view/home_view.dart';
 import 'signup.dart';
 import 'whigets/custombuttonauth.dart';
 
@@ -13,8 +14,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,8 @@ class _LoginState extends State<Login> {
               ),
               Container(height: 10),
               CustomTextForm(
-                  hinttext: "ُEnter Your Email", mycontroller: email),
+                  hinttext: "ُEnter Your Email",
+                  onChanged: (data) => email = data),
               Container(height: 10),
               const Text(
                 "Password",
@@ -48,7 +50,9 @@ class _LoginState extends State<Login> {
               ),
               Container(height: 10),
               CustomTextForm(
-                  hinttext: "ُEnter Your Password", mycontroller: email),
+                hinttext: "ُEnter Your Password",
+                onChanged: (data) => password = data,
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 10, bottom: 20),
                 alignment: Alignment.topRight,
@@ -61,7 +65,14 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
-          CustomButtonAuth(title: "login", onPressed: () {}),
+          CustomButtonAuth(
+            title: "login",
+            onPressed: () async {
+              
+
+
+            },
+          ),
           Container(height: 20),
 
           MaterialButton(
@@ -85,7 +96,7 @@ class _LoginState extends State<Login> {
           // Text("Don't Have An Account ? Resister" , textAlign: TextAlign.center,)
           InkWell(
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => SignUp(),

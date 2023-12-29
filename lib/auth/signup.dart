@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:helper_fire_bace/auth/login.dart';
 import 'package:helper_fire_bace/auth/whigets/custombuttonauth.dart';
 import 'package:helper_fire_bace/auth/whigets/customlogoauth.dart';
+import 'package:helper_fire_bace/home_view/home_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'whigets/textformfield.dart';
-
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -14,9 +15,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  String? username;
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,8 @@ class _SignUpState extends State<SignUp> {
               ),
               Container(height: 10),
               CustomTextForm(
-                  hinttext: "ُEnter Your username", mycontroller: username),
+                  hinttext: "ُEnter Your username",
+                  onChanged: (data) => username = data),
               Container(height: 20),
               const Text(
                 "Email",
@@ -50,7 +52,8 @@ class _SignUpState extends State<SignUp> {
               ),
               Container(height: 10),
               CustomTextForm(
-                  hinttext: "ُEnter Your Email", mycontroller: email),
+                  hinttext: "ُEnter Your Email",
+                  onChanged: (data) => email = data),
               Container(height: 10),
               const Text(
                 "Password",
@@ -58,7 +61,10 @@ class _SignUpState extends State<SignUp> {
               ),
               Container(height: 10),
               CustomTextForm(
-                  hinttext: "ُEnter Your Password", mycontroller: email),
+                hinttext: "ُEnter Your Password",
+                onChanged: (data) =>
+                 password = data,
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 10, bottom: 20),
                 alignment: Alignment.topRight,
@@ -71,14 +77,40 @@ class _SignUpState extends State<SignUp> {
               ),
             ],
           ),
-          CustomButtonAuth(title: "SignUp", onPressed: () {}),
-          Container(height: 20),
+          CustomButtonAuth(
+            title: "SignUp",
+            onPressed: () async {
 
+              try {
+                final credential =
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email!,
+                  password: password!,
+                );
+                  print('accept');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeView(),
+                  ),
+                );
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'weak-password') {
+                  print('The password provided is too weak.');
+                  
+                } else if (e.code == 'email-already-in-use') {
+                  print('The account already exists for that email.');
+                }
+              } catch (e) {
+                print(e);
+              }
+            },
+          ),
           Container(height: 20),
-          // Text("Don't Have An Account ? Resister" , textAlign: TextAlign.center,)
+          Container(height: 20),
           InkWell(
             onTap: () {
-                           Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => Login(),
