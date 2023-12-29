@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "476770880706",
+    "project_id": "helper-fire-bace",
+    "storage_bucket": "helper-fire-bace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476770880706:android:f8cfb865efd01ea26bff5b",
+        "android_client_info": {
+          "package_name": "com.example.helper_fire_bace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAap3yZkXDtWgz5m9js2CG53kAJbZVmm3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
