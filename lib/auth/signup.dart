@@ -86,14 +86,32 @@ class _SignUpState extends State<SignUp> {
                   email: email!,
                   password: password!,
                 );
-                print('accept');
+               
                 FirebaseAuth.instance.currentUser!.sendEmailVerification();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Login(),
-                  ),
-                );
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.success,
+                  animType: AnimType.rightSlide,
+                  title: 'success',
+                  desc: 'send the massege your Email',
+                  btnCancelOnPress: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  },
+                  btnOkOnPress: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  },
+                )..show();
+
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
                   print('The password provided is too weak.');

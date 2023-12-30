@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:helper_fire_bace/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:helper_fire_bace/firebase_options.dart';
-import 'package:helper_fire_bace/home_view/home_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
